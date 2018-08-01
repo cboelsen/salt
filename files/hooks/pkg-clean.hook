@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Description = Cleaning package cache...
+Depends = coreutils
+When = PostTransaction
+Exec = /usr/bin/bash -c "echo -n '  Installed packages ' && paccache -rk 2 | xargs echo && echo -n 'Uninstalled packages ' && paccache -ruk 0 | xargs echo"

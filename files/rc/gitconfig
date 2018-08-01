@@ -1,0 +1,15 @@
+[user]
+    name = Christian Boelsen
+    email = {{ pillar["email"] }}
+[color]
+    ui = always
+[core]
+    editor = vim
+[merge]
+    tool = vimdiff
+[alias]
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[push]
+    default = matching
+[http]
+    postBuffer = 157286400

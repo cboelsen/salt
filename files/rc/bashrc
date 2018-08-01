@@ -1,0 +1,120 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Set up terminals to use 256 colors.
+if [ $TERM == "rxvt-unicode" ]; then
+   TERM=rxvt-unicode-256color
+fi
+
+if [ $TERM == "screen" ]; then
+   TERM=screen-256color
+fi
+
+export EDITOR=vim
+export HISTCONTROL=ignoredups
+export PROJECT_HOME=$HOME/projects
+export PATH=$PATH:$HOME/bin
+
+# Useful aliases
+alias feh='feh -ZFd'
+alias ls='ls --color=always --group-directories-first'
+alias cp='cp --reflink=auto'
+alias rm.='cd .. && rmdir "${OLDPWD##*/}"'
+alias rm..='rm. && rm.'
+
+alias cd..='cd ..'
+alias cd...='cd ../..'
+alias cd....='cd ../../..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Set up the colors 'ls' uses for filetypes.
+if [ -f ~/.dir_colors ]; then
+    eval $(dircolors -b ~/.dir_colors)
+elif [ -f /etc/DIR_COLORS ]; then
+    eval $(dircolors -b /etc/DIR_COLORS)
+fi
+
+# Set up git env vars for use in the prompt.
+GIT_PS1_SHOWDIRTYSTATE=1
+source /usr/share/git/git-prompt.sh
+
+# The function to display the exit code of the previous command in the prompt.
+exitstatus()
+{
+    if [[ $? == 0 ]]; then
+        echo '$'
+    else
+        echo '!'
+    fi
+}
+
+# Colorful prompts!
+if [[ ${EUID} == 0 ]]; then
+    PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W $(exitstatus)\[\033[00m\] '
+else
+    PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[00;33m\]$(__git_ps1 " (%s)") \[\033[01;34m\]$(exitstatus)\[\033[00m\] '
+fi
+
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# Useful functions.
+function _remove_docker_containers_with_status {
+    output=$(sudo docker ps -f "status=$1" -q)
+    [[ $(echo $output | sed '/^\s*$/d' | wc -l) -ne 0 ]] && sudo docker rm $(echo $output)
+}
+
+function clean-docker {
+    _remove_docker_containers_with_status "exited"
+    _remove_docker_containers_with_status "created"
+    images_to_remove=$(sudo docker images | sed -e 's/^[^<].*$//' -e 's/^<none> *<none> *\([a-f0-9]\+\) *.*$/\1/')
+    [[ $(echo $images_to_remove | sed '/^\s*$/d' | wc -l) -ne 0 ]] && echo $images_to_remove | sudo xargs docker rmi
+}
+
+# Set up paths for 'npm' if it's installed.
+if type npm >/dev/null 2>/dev/null; then
+    # NPM packages in homedir
+    export PATH="$HOME/.node_modules/bin:$PATH"
+fi
+
+# Set up virtualenvwrapper if it's installed.
+export WORKON_HOME=~/.virtualenvs
+if [ -f /usr/bin/virtualenvwrapper.sh ]; then
+    source $(which virtualenvwrapper.sh)
+elif [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ]; then
+    source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+else
+    unset WORKON_HOME
+fi
+
+# Pyenv
+if [ -d $HOME/.pyenv/bin ]; then
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
+# Rust & cargo
+if [ -d $HOME/.cargo/bin ]; then
+    export PATH=${PATH}:$HOME/.cargo/bin
+fi
+
+# Golang
+if type go >/dev/null 2>/dev/null; then
+    # Point to the location beneath which source and binaries are installed.
+    export GOPATH=$PROJECT_HOME/go
+    export PATH=${PATH}:${GOPATH}/bin
+fi
+
+# Ruby
+if [ -d $HOME/.rvm/bin ]; then
+    # Add RVM to PATH for scripting
+    export PATH="$PATH:$HOME/.rvm/bin"
+fi
