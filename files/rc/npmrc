@@ -1,1 +1,1 @@
-prefix=/home/vagrant/.node_modules
+prefix=/home/{{ pillar["user"] }}/.node_modules

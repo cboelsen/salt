@@ -77,3 +77,4 @@ npmrc:
     - name: /home/{{ pillar["user"] }}/.npmrc
     - source: salt://files/rc/npmrc
     - user: {{ pillar["user"] }}
+    - template: jinja
