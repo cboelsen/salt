@@ -52,7 +52,6 @@ ycm_install:
     - name: /home/{{ pillar["user"] }}/.vim/bundle/YouCompleteMe/install.py --clang-completer --system-libclang --ninja
     - runas: {{ pillar["user"] }}
     - require:
-      - vundle_install
       - vundle_update
 
 projects_dir:
