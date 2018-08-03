@@ -14,7 +14,7 @@ hooks_dir:
 hooks.orphans:
   file.managed:
     - name: /etc/pacman.d/hooks/orphans.hook
-    - source: salt://files/hooks/orphans.hook
+    - source: salt://common/files/hooks/orphans.hook
     - user: root
     - mode: 0640
     - requires:
@@ -24,7 +24,7 @@ hooks.orphans:
 hooks.pkg-clean:
   file.managed:
     - name: /etc/pacman.d/hooks/pkg-clean.hook
-    - source: salt://files/hooks/pkg-clean.hook
+    - source: salt://common/files/hooks/pkg-clean.hook
     - user: root
     - mode: 0640
     - requires:

@@ -62,19 +62,19 @@ projects_dir:
 gitconfig:
   file.managed:
     - name: /home/{{ pillar["user"] }}/.gitconfig
-    - source: salt://files/rc/gitconfig
+    - source: salt://common/files/rc/gitconfig
     - user: {{ pillar["user"] }}
     - template: jinja
 
 bashrc:
   file.managed:
     - name: /home/{{ pillar["user"] }}/.bashrc
-    - source: salt://files/rc/bashrc
+    - source: salt://common/files/rc/bashrc
     - user: {{ pillar["user"] }}
 
 npmrc:
   file.managed:
     - name: /home/{{ pillar["user"] }}/.npmrc
-    - source: salt://files/rc/npmrc
+    - source: salt://common/files/rc/npmrc
     - user: {{ pillar["user"] }}
     - template: jinja
