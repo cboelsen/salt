@@ -3,3 +3,6 @@ fileserver_backend:
   - gitfs
 gitfs_remotes:
   - https://github.com/cboelsen/salt
+#grains:
+#  roles:
+#    - <insert roles here>

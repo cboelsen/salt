@@ -15,3 +15,7 @@ minion_file:
     - name: /etc/salt/minion
     - source: salt://minion
     - user: root
+
+include:
+  - .pacman
+  - .dev_env
