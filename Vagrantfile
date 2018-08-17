@@ -20,7 +20,8 @@ Vagrant.configure("2") do |config|
   # config.vm.network "public_network"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 8192
-    vb.cpus = 8
+    vb.cpus = 6
+    vb.customize ["modifyvm", :id, "--vram", "32"]
   end
 
   config.vm.provision "shell", inline: <<-SHELL
