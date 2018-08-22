@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo salt-call state.highstate --retcode-passthrough --local --log-level=debug pillar='{"user":"{{ pillar["user"] }}","email":"{{ pillar["email"] }}"}'
