@@ -23,16 +23,6 @@ vimfiles_clone:
     - require:
       - dev_packages
 
-{% if not salt['file.directory_exists']('/home/{{ pillar["user"] }}/.vimrc') %}
-vimrc:
-  file.symlink:
-    - name: /home/{{ pillar["user"] }}/.vimrc
-    - target: /home/{{ pillar["user"] }}/.vim/vimrc
-    - user: {{ pillar["user"] }}
-    - require:
-      - vimfiles_clone
-{% endif %}
-
 vundle_clone:
   git.latest:
     - name: https://github.com/VundleVim/Vundle.vim.git
