@@ -29,7 +29,7 @@ vundle_clone:
     - target: /home/{{ pillar["user"] }}/.vim/bundle/Vundle.vim
     - user: {{ pillar["user"] }}
     - require:
-      - vimrc
+      - vimfiles_clone
 
 vundle_update:
   cmd.run:
