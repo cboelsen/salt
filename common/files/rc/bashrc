@@ -118,3 +118,6 @@ if [ -d $HOME/.rvm/bin ]; then
     # Add RVM to PATH for scripting
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
+
+# Add fzf support (fuzzy searching).
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

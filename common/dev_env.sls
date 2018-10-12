@@ -46,6 +46,13 @@ ycm_install:
     - require:
       - vundle_update
 
+fzf_install:
+  cmd.run:
+    - name: /home/{{ pillar["user"] }}/.vim/bundle/fzf/install --all
+    - runas: {{ pillar["user"] }}
+    - require:
+      - vundle_update
+
 projects_dir:
   file.directory:
     - name: /home/{{ pillar["user"] }}/projects
