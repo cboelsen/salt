@@ -101,6 +101,7 @@ if [ -d /home/virtualenvs/{{ pillar["user"] }} ]; then
     export WORKON_HOME=/home/virtualenvs/{{ pillar["user"] }}
 else
     export WORKON_HOME=$HOME/.virtualenvs
+fi
 if [ -f /usr/bin/virtualenvwrapper.sh ]; then
     source $(which virtualenvwrapper.sh)
 elif [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ]; then
