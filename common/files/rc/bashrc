@@ -135,9 +135,16 @@ if [ -d $HOME/.rvm/bin ]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
-# Add fzf support (fuzzy searching).
+# Add fzf support (fuzzy searching)
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# Display the latest archlinux news on login
 if [ "$PS1" ]; then
     $VENV/nzbgrabber/bin/python $HOME/bin/archfeed.py 3
+fi
+
+# Use ripgrep by default with fzf
+if type rg >/dev/null 2>/dev/null; then
+    export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
