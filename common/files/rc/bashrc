@@ -98,16 +98,16 @@ fi
 
 # Set up virtualenvwrapper if it's installed.
 if [ -d /home/virtualenvs/{{ pillar["user"] }} ]; then
-    export WORKON_HOME=/home/virtualenvs/{{ pillar["user"] }}
+    VENV=/home/virtualenvs/{{ pillar["user"] }}
 else
-    export WORKON_HOME=$HOME/.virtualenvs
+    VENV=$HOME/.virtualenvs
 fi
 if [ -f /usr/bin/virtualenvwrapper.sh ]; then
+    export WORKON_HOME=$VENV
     source $(which virtualenvwrapper.sh)
 elif [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ]; then
+    export WORKON_HOME=$VENV
     source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
-else
-    unset WORKON_HOME
 fi
 
 # Pyenv
@@ -139,5 +139,5 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 if [ "$PS1" ]; then
-    /home/virtualenvs/{{ pillar["user"] }}/nzbgrabber/bin/python $HOME/bin/archfeed.py 3
+    $VENV/nzbgrabber/bin/python $HOME/bin/archfeed.py 3
 fi
