@@ -97,7 +97,10 @@ if type npm >/dev/null 2>/dev/null; then
 fi
 
 # Set up virtualenvwrapper if it's installed.
-export WORKON_HOME=~/.virtualenvs
+if [ -d /home/virtualenvs/{{ pillar["user"] }} ]; then
+    export WORKON_HOME=/home/virtualenvs/{{ pillar["user"] }}
+else
+    export WORKON_HOME=$HOME/.virtualenvs
 if [ -f /usr/bin/virtualenvwrapper.sh ]; then
     source $(which virtualenvwrapper.sh)
 elif [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ]; then
@@ -135,5 +138,5 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 if [ "$PS1" ]; then
-    /home/virtualenvs/christian/nzbgrabber/bin/python bin/archfeed.py 3
+    /home/virtualenvs/{{ pillar["user"] }}/nzbgrabber/bin/python $HOME/bin/archfeed.py 3
 fi

@@ -70,6 +70,7 @@ bashrc:
     - name: /home/{{ pillar["user"] }}/.bashrc
     - source: salt://common/files/rc/bashrc
     - user: {{ pillar["user"] }}
+    - template: jinja
 
 npmrc:
   file.managed:
