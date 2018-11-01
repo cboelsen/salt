@@ -19,6 +19,10 @@ export HISTCONTROL=ignoredups
 export PROJECT_HOME=$HOME/projects
 export PATH=$PATH:$HOME/bin
 
+# Don't map ctrl-q and ctrl-s to terminal control (start/stop output).
+stty stop undef
+stty start undef
+
 # Useful aliases
 alias diff='diff --color=auto'
 alias cp='cp --reflink=auto'
