@@ -73,6 +73,13 @@ bashrc:
     - user: {{ pillar["user"] }}
     - template: jinja
 
+inputrc:
+  file.managed:
+    - name: /home/{{ pillar["user"] }}/.inputrc
+    - source: salt://common/files/rc/inputrc
+    - user: {{ pillar["user"] }}
+    - template: jinja
+
 npmrc:
   file.managed:
     - name: /home/{{ pillar["user"] }}/.npmrc
