@@ -1,9 +1,31 @@
 import feedparser
 import sys
+import threading
+import time
 
 from html.parser import HTMLParser
 
-d = feedparser.parse('https://www.archlinux.org/feeds/news/')
+
+feed = {}
+def get_feed():
+    feed['feed'] = feedparser.parse('https://www.archlinux.org/feeds/news/')
+
+
+t = threading.Thread(target=get_feed)
+t.daemon = True
+t.start()
+for _ in range(30):
+    if 'feed' in feed:
+        d = feed['feed']
+        break
+    time.sleep(0.1)
+else:
+    print('ERROR: Timed out getting feed')
+    sys.exit(1)
+
+if not d['entries']:
+    print('ERROR: No entries found in feed!')
+    sys.exit(1)
 first_item = d['entries'][0]
 
 
