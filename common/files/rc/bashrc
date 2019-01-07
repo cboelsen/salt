@@ -70,15 +70,19 @@ exitstatus()
     fi
 }
 
-# Colorful prompts!
-if [[ ${EUID} == 0 ]]; then
-    PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W $(exitstatus)\[\033[00m\] '
-else
-    PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[00;33m\]$(__git_ps1 " (%s)") \[\033[01;34m\]$(exitstatus)\[\033[00m\] '
-fi
+if [ "$PS1" ]; then
+    # Colorful prompts!
+    if [[ ${EUID} == 0 ]]; then
+        PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W $(exitstatus)\[\033[00m\] '
+    else
+        PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[00;33m\]$(__git_ps1 " (%s)") \[\033[01;34m\]$(exitstatus)\[\033[00m\] '
+    fi
 
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+    # Add system-wide bash-completion, even with sudo.
+    if [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
+    complete -cf sudo
 fi
 
 # Useful functions.
@@ -142,14 +146,14 @@ fi
 # Add fzf support (fuzzy searching)
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# Display the latest archlinux news on login
-if [ "$PS1" ]; then
-    $VENV/nzbgrabber/bin/python $HOME/bin/archfeed.py 3
-fi
-
 # Use ripgrep by default with fzf
 if type rg >/dev/null 2>/dev/null; then
     export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_CTRL_T_OPTS="--preview '~/.vim/bundle/fzf.vim/bin/preview.sh {}'"
+fi
+
+# Display the latest archlinux news on login
+if [ "$PS1" ]; then
+    $VENV/nzbgrabber/bin/python $HOME/bin/archfeed.py 3
 fi
