@@ -23,13 +23,6 @@ salt_update:
     - mode: 744
     - template: jinja
 
-arch_feed:
-  file.managed:
-    - name: /home/{{ pillar["user"] }}/bin/archfeed.py
-    - source: salt://common/files/bin/archfeed.py
-    - user: {{ pillar["user"] }}
-    - mode: 644
-
 include:
   - .pacman
   - .dev_env

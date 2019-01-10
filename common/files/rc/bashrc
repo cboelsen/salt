@@ -152,8 +152,3 @@ if type rg >/dev/null 2>/dev/null; then
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_CTRL_T_OPTS="--preview '~/.vim/bundle/fzf.vim/bin/preview.sh {}'"
 fi
-
-# Display the latest archlinux news on login
-if [ "$PS1" ]; then
-    $VENV/nzbgrabber/bin/python $HOME/bin/archfeed.py 3
-fi
