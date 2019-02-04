@@ -11,7 +11,6 @@ dev_packages:
       - cmake
       - ctags
       - npm
-      - rubygems
       - ripgrep
     - requires:
       - updates
