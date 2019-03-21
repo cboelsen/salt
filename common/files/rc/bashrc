@@ -153,3 +153,6 @@ if type rg >/dev/null 2>/dev/null; then
     export FZF_CTRL_T_OPTS="--preview '~/.vim/bundle/fzf.vim/bin/preview.sh {}'"
     export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap --bind '?:toggle-preview'"
 fi
+
+# Include any machine specific scripts as well, if they exist.
+[ -f ~/.bashrc.ext ] && source ~/.bashrc.ext
