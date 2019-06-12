@@ -43,7 +43,11 @@ vundle_update:
 
 ycm_install:
   cmd.run:
+{% if grains['os_family'] == 'Arch' %}
     - name: /home/{{ pillar["user"] }}/.vim/bundle/YouCompleteMe/install.py --clang-completer --system-libclang --ninja
+{% else %}
+    - name: /home/{{ pillar["user"] }}/.vim/bundle/YouCompleteMe/install.py --clang-completer
+{% endif %}
     - runas: {{ pillar["user"] }}
     - require:
       - vundle_update
