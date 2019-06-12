@@ -1,3 +1,4 @@
+{% if grains['os_family'] == 'Arch' %}
 dev_packages:
   pkg.installed:
     - pkgs:
@@ -14,6 +15,7 @@ dev_packages:
       - ripgrep
     - requires:
       - updates
+{% endif %}
 
 vimfiles_clone:
   git.latest:

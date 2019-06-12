@@ -1,3 +1,4 @@
+{% if grains['os_family'] == 'Arch' %}
 updates:
   pkg.uptodate
 
@@ -6,9 +7,10 @@ general_packages:
     - pkgs:
       - rxvt-unicode-terminfo
       - sed
-      - screen
+      - tmux
     - requires:
       - updates
+{% endif %}
 
 bin_dir:
   file.directory:
@@ -24,5 +26,7 @@ salt_update:
     - template: jinja
 
 include:
+{% if grains['os_family'] == 'Arch' %}
   - .pacman
+{% endif %}
   - .dev_env
