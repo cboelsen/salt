@@ -40,6 +40,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+alias t='tmux new-session -A -c $HOME -s 0'
+
 # Set up the colors 'ls' uses for filetypes.
 if [ -f ~/.dir_colors ]; then
     eval $(dircolors -b ~/.dir_colors)
