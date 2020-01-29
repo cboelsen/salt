@@ -25,39 +25,13 @@ vimfiles_clone:
     - require:
       - dev_packages
 
-vundle_clone:
-  git.latest:
-    - name: https://github.com/VundleVim/Vundle.vim.git
-    - target: /home/{{ pillar["user"] }}/.vim/bundle/Vundle.vim
-    - user: {{ pillar["user"] }}
-    - require:
-      - vimfiles_clone
-
-vundle_update:
+plugin_update:
   cmd.run:
-    - name: vim -i NONE -c VundleInstall -c VundleUpdate -c quitall
+    - name: vim -i NONE -c "PlugUpdate --sync" -c quitall
     - runas: {{ pillar["user"] }}
     - use_vt: true
     - require:
       - vundle_clone
-
-ycm_install:
-  cmd.run:
-{% if grains['os_family'] == 'Arch' %}
-    - name: /home/{{ pillar["user"] }}/.vim/bundle/YouCompleteMe/install.py --clang-completer --system-libclang --ninja
-{% else %}
-    - name: /home/{{ pillar["user"] }}/.vim/bundle/YouCompleteMe/install.py --clang-completer
-{% endif %}
-    - runas: {{ pillar["user"] }}
-    - require:
-      - vundle_update
-
-fzf_install:
-  cmd.run:
-    - name: /home/{{ pillar["user"] }}/.vim/bundle/fzf/install --all
-    - runas: {{ pillar["user"] }}
-    - require:
-      - vundle_update
 
 projects_dir:
   file.directory:
