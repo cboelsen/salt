@@ -31,7 +31,7 @@ plugin_update:
     - runas: {{ pillar["user"] }}
     - use_vt: true
     - require:
-      - vundle_clone
+      - vimfiles_clone
 
 projects_dir:
   file.directory:
